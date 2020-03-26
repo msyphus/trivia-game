@@ -23,6 +23,9 @@ var questions = [
 
 var randQuest;
 var randAns;
+var chosenAns;
+var correct = 0;
+var incorrect = 0;
 
 $(document).ready(function() {
     $("button").on("click", function() {
@@ -30,12 +33,11 @@ $(document).ready(function() {
         $("#questionText").text(randQuest.quest);
         $("button").hide();
         answerList();
-        
-    })
+    });
 
     function answerList() {
         for(var i = 0; i < randQuest.answers.length; i++) {
-            $("#answerText").append("<p>" + randQuest.answers[i] + "</p>");
+            $("#answerText").append("<button class='btn btn-info userChoice'>" + randQuest.answers[i] + "</button>");
                 
         //var copy = [];
         //for(var i = 0; i < randQuest.answers.length; i++) {
@@ -45,4 +47,14 @@ $(document).ready(function() {
                 //$("#answerText").append("<p>" + randAns + "</p>");
             }
     };
+
+    $(this).on("click", ".userChoice", function(event) {
+        chosenAns = event.currentTarget.innerText;
+        if(chosenAns === randQuest.correct) {
+            correct++;
+        } else {
+            incorrect++;
+        }
+    });
+    
 });
