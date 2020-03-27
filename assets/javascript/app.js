@@ -26,14 +26,21 @@ var randAns;
 var chosenAns;
 var correct = 0;
 var incorrect = 0;
+var time = 5;
+var timeInterval;
 
 $(document).ready(function() {
     $("button").on("click", function() {
+        newQuestion();
+        $("button").hide();
+    });
+
+    function newQuestion() {
         randQuest = questions[Math.floor(Math.random() * questions.length)];
         $("#questionText").text(randQuest.quest);
-        $("button").hide();
         answerList();
-    });
+        startTimer();
+    };
 
     function answerList() {
         for(var i = 0; i < randQuest.answers.length; i++) {
@@ -55,6 +62,34 @@ $(document).ready(function() {
         } else {
             incorrect++;
         }
+        setTimeout(startQuiz, 1000);
     });
-    
+
+    function timerCount () {
+        time--;
+        var convertedTime = timeConvert(time);
+        $("#timer").text(convertedTime);
+        if(time === 0) {
+            newQuestion();
+            incorrect++;
+            time = 5;
+        }
+    }
+
+    function startTimer () {
+        timeInterval = setInterval(timerCount, 1000);
+    }
+
+    function timeConvert (t) {
+        minutes = Math.floor(t / 60);
+        seconds = t - (minutes * 60);
+        if (seconds < 10) {
+            seconds = "0" + seconds;
+        }
+        if (minutes === 0) {
+            minutes = "0";
+        }
+        return minutes + ":" + seconds;
+    };
+
 });
