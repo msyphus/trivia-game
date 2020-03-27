@@ -32,7 +32,7 @@ var timeInterval;
 $(document).ready(function() {
     $("button").on("click", function() {
         newQuestion();
-        $("button").hide();
+        $(".startButton").hide();
     });
 
     function newQuestion() {
@@ -44,8 +44,8 @@ $(document).ready(function() {
 
     function answerList() {
         for(var i = 0; i < randQuest.answers.length; i++) {
-            $("#answerText").append("<button class='btn btn-info userChoice'>" + randQuest.answers[i] + "</button>");
-                
+            $("#answerText").append("<button class='btn btn-info btn-block userChoice'>" + randQuest.answers[i] + "</button>");
+
         //var copy = [];
         //for(var i = 0; i < randQuest.answers.length; i++) {
           //  randAns = randQuest.answers[Math.floor(Math.random() * randQuest.answers.length)];
