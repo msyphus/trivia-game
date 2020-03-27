@@ -1,0 +1,7 @@
+.bg-dark {
+    background-image: url("../images/computer.jpg");
+}
+
+.bg-secondary {
+    background-color: rgba(128,128,128,0.7)!important;
+}

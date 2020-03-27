@@ -43,6 +43,7 @@ $(document).ready(function() {
     };
 
     function answerList() {
+        $("#answerText").empty();
         for(var i = 0; i < randQuest.answers.length; i++) {
             $("#answerText").append("<button class='btn btn-info btn-block userChoice'>" + randQuest.answers[i] + "</button>");
 
@@ -91,5 +92,9 @@ $(document).ready(function() {
         }
         return minutes + ":" + seconds;
     };
+
+    function endQuiz () {
+
+    }
 
 });
