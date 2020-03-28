@@ -28,38 +28,45 @@ var correct = 0;
 var incorrect = 0;
 var time = 5;
 var timeInterval;
+var i = 0;
 
 $(document).ready(function() {
     $("button").on("click", function() {
+        randQuest = questions.sort(function (a, b) {
+            return 0.5 - Math.random();
+        })      
         newQuestion();
         $(".startButton").hide();
     });
 
     function newQuestion() {
-        randQuest = questions[Math.floor(Math.random() * questions.length)];
-        $("#questionText").text(randQuest.quest);
+        $("#questionText").text(randQuest[i].quest);
         answerList();
-        startTimer();
+        //startTimer();
     };
 
     function answerList() {
         $("#answerText").empty();
-        var sorted = randQuest.answers.sort(function (a, b) {
+        var sorted = randQuest[i].answers.sort(function (a, b) {
             return 0.5 - Math.random();
-        }); console.log(sorted);
-        for(var i = 0; i < randQuest.answers.length; i++) {
-       $("#answerText").append("<button class='btn btn-info btn-block userChoice'>" + sorted[i] + "</button>");
+        });
+        for(var j = 0; j < randQuest[i].answers.length; j++) {
+       $("#answerText").append("<button class='btn btn-info btn-block userChoice'>" + sorted[j] + "</button>");
         }
     };
 
     $(this).on("click", ".userChoice", function(event) {
         chosenAns = event.currentTarget.innerText;
-        if(chosenAns === randQuest.correct) {
+        if(chosenAns === randQuest[i].correct) {
             correct++;
+            i++;
+            newQuestion();
         } else {
             incorrect++;
+            i++;
+            newQuestion();
         }
-        setTimeout(startQuiz, 1000);
+        //setTimeout(startQuiz, 1000);
     });
 
     function timerCount () {
