@@ -40,6 +40,7 @@ $(document).ready(function() {
     });
 
     function newQuestion() {
+        console.log('begin', i);
         $("#questionText").text(randQuest[i].quest);
         answerList();
         //startTimer();
@@ -57,15 +58,19 @@ $(document).ready(function() {
 
     $(this).on("click", ".userChoice", function(event) {
         chosenAns = event.currentTarget.innerText;
-        if(chosenAns === randQuest[i].correct) {
-            correct++;
+        if(i < randQuest.length - 1) {
+            if(chosenAns === randQuest[i].correct) {
+                correct++;
+            } else {
+                incorrect++;
+            }
             i++;
             newQuestion();
         } else {
-            incorrect++;
-            i++;
-            newQuestion();
+            $("#questionText").empty();
+            $("#answerText").empty();
         }
+        console.log(i);
         //setTimeout(startQuiz, 1000);
     });
 
