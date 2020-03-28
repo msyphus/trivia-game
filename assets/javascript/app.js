@@ -41,9 +41,10 @@ $(document).ready(function() {
 
     function newQuestion() {
         console.log('begin', i);
+        time = 5;
         $("#questionText").text(randQuest[i].quest);
         answerList();
-        //startTimer();
+        startTimer();
     };
 
     function answerList() {
@@ -65,13 +66,11 @@ $(document).ready(function() {
                 incorrect++;
             }
             i++;
-            newQuestion();
+            setTimeout(newQuestion, 1000);
         } else {
             $("#questionText").empty();
             $("#answerText").empty();
         }
-        console.log(i);
-        //setTimeout(startQuiz, 1000);
     });
 
     function timerCount () {
@@ -82,7 +81,9 @@ $(document).ready(function() {
             newQuestion();
             incorrect++;
             time = 5;
+            clearInterval(timeInterval);
         }
+        
     }
 
     function startTimer () {
