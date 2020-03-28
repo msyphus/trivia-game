@@ -44,16 +44,12 @@ $(document).ready(function() {
 
     function answerList() {
         $("#answerText").empty();
-        for(var i = 0; i < randQuest.answers.length; i++) {
-            $("#answerText").append("<button class='btn btn-info btn-block userChoice'>" + randQuest.answers[i] + "</button>");
-
-        //var copy = [];
-        //for(var i = 0; i < randQuest.answers.length; i++) {
-          //  randAns = randQuest.answers[Math.floor(Math.random() * randQuest.answers.length)];
-            //if(copy.includes(randAns)) { continue }
-              //  copy.push(randAns);
-                //$("#answerText").append("<p>" + randAns + "</p>");
-            }
+        var sorted = randQuest.answers.sort(function (a, b) {
+            return 0.5 - Math.random();
+        }); console.log(sorted);
+        for(var i = 0; i < randQuest.answers.length; i++) {
+       $("#answerText").append("<button class='btn btn-info btn-block userChoice'>" + sorted[i] + "</button>");
+        }
     };
 
     $(this).on("click", ".userChoice", function(event) {
@@ -91,10 +87,5 @@ $(document).ready(function() {
             minutes = "0";
         }
         return minutes + ":" + seconds;
-    };
-
-    function endQuiz () {
-
-    }
-
+    }; 
 });
