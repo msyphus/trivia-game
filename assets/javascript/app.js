@@ -28,6 +28,7 @@ var correct = 0;
 var incorrect = 0;
 var time = 5;
 var timeInterval;
+var timeRunning = false;
 var i = 0;
 
 $(document).ready(function() {
@@ -40,8 +41,6 @@ $(document).ready(function() {
     });
 
     function newQuestion() {
-        console.log('begin', i);
-        time = 5;
         $("#questionText").text(randQuest[i].quest);
         answerList();
         startTimer();
@@ -57,6 +56,19 @@ $(document).ready(function() {
         }
     };
 
+    function endQuiz() {
+        setTimeout(function() {
+            $("#questionText").empty();
+            $("#answerText").empty();
+            stopTimer();
+            if(chosenAns === randQuest[i].correct) {
+                correct++;
+            } else {
+                incorrect++;
+            }
+        }, 1000);
+    };
+
     $(this).on("click", ".userChoice", function(event) {
         chosenAns = event.currentTarget.innerText;
         if(i < randQuest.length - 1) {
@@ -68,27 +80,39 @@ $(document).ready(function() {
             i++;
             setTimeout(newQuestion, 1000);
         } else {
-            $("#questionText").empty();
-            $("#answerText").empty();
+            endQuiz();
         }
     });
 
     function timerCount () {
+        if(time > 0) {
         time--;
         var convertedTime = timeConvert(time);
         $("#timer").text(convertedTime);
-        if(time === 0) {
-            newQuestion();
+        } else if (time === 0 && i < randQuest.length -1) {
+            stopTimer();
             incorrect++;
-            time = 5;
-            clearInterval(timeInterval);
+            i++;
+            newQuestion();
+        } else {
+            endQuiz();
         }
-        
-    }
+    };
 
-    function startTimer () {
-        timeInterval = setInterval(timerCount, 1000);
-    }
+    function startTimer() {
+        if(timeRunning === false) {
+            timeRunning = true;
+            timeInterval = setInterval(timerCount, 1000);
+        }
+    };
+
+    function stopTimer() {
+        if(timeRunning === true) {
+            clearInterval(timeInterval);
+            timeRunning = false;
+            time = 5;
+        }
+    };
 
     function timeConvert (t) {
         minutes = Math.floor(t / 60);
