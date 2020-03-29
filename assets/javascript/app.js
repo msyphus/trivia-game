@@ -30,6 +30,7 @@ var time = 5;
 var timeInterval;
 var timeRunning = false;
 var i = 0;
+var score;
 
 $(document).ready(function() {
     $("button").on("click", function() {
@@ -58,14 +59,19 @@ $(document).ready(function() {
 
     function endQuiz() {
         setTimeout(function() {
-            $("#questionText").empty();
-            $("#answerText").empty();
-            stopTimer();
             if(chosenAns === randQuest[i].correct) {
                 correct++;
             } else {
                 incorrect++;
             }
+            score = correct / (correct +incorrect);
+            var correctAnswers = $("<p>").text("Correct Answers: " + correct);
+            var incorrectAnswers = $("<p>").text("Incorrect Answers: " + incorrect);
+            $("#questionText").text("You scored " + score + "%")
+            $("#answerText").empty();
+            $("#answerText").append(correctAnswers, incorrectAnswers);
+            stopTimer();
+            $("#timer").empty();
         }, 1000);
     };
 
