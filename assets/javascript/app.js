@@ -89,10 +89,12 @@ $(document).ready(function() {
     $(this).on("click", ".userChoice", function(event) {
         chosenAns = event.currentTarget.innerText;
         if(i < randQuest.length - 1) {
+            stopTimer();
             checkAnswer();
             i++;
             setTimeout(newQuestion, 1000);
         } else {
+            checkAnswer();
             endQuiz();
         }
     });
