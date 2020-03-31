@@ -72,12 +72,14 @@ $(document).ready(function() {
     function startTimer() {
         if(timeRunning === false) {
             timeRunning = true;
+            $(".btn").off("click", false);
             timeInterval = setInterval(timerCount, 1000);
         }
     };
 
     function stopTimer() {
         if(timeRunning === true) {
+            $(".btn").on("click", false);
             clearInterval(timeInterval);
             timeRunning = false;
             time = 5;
@@ -92,28 +94,30 @@ $(document).ready(function() {
             stopTimer();
             incorrect++;
             i++;
-            newQuestion();
+            $("#explanation").text("Time's Up");
+            setTimeout(newQuestion, 2000);
         } else {
+            stopTimer();
             incorrect++;
-            endQuiz();
+            $("#explanation").text("Time's Up");
+            setTimeout(endQuiz, 2000);
         }
     };
 
     $(this).on("click", ".userChoice", function(event) {
         chosenAns = event.currentTarget.innerText;
         if(i < randQuest.length - 1) {
-            stopTimer();
             checkAnswer();
             i++;
             setTimeout(newQuestion, 10000);
         } else {
             checkAnswer();
-            console.log("hello");
             setTimeout(endQuiz, 10000);
         }
     });
 
     function checkAnswer() {
+        stopTimer();
         if(chosenAns === randQuest[i].correct) {
             correct++;
             $("#explanation").text(randQuest[i].explain);
@@ -125,7 +129,6 @@ $(document).ready(function() {
     };
 
     function endQuiz() {
-        stopTimer();
         setTimeout(function() {
             score = (correct / (correct +incorrect) * 100);
             var correctAnswers = $("<p>").html("Correct Answers: " + correct);
