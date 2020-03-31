@@ -22,7 +22,6 @@ var questions = [
 ];
 
 var randQuest;
-var randAns;
 var chosenAns;
 var correct = 0;
 var incorrect = 0;
@@ -53,57 +52,9 @@ $(document).ready(function() {
             return 0.5 - Math.random();
         });
         for(var j = 0; j < randQuest[i].answers.length; j++) {
-       $("#answerText").append("<button class='btn btn-info btn-block userChoice'>" + sorted[j] + "</button>");
+            $("#answerText").append("<button class='btn btn-info btn-block userChoice'>" + sorted[j] + "</button>");
         }
     };
-
-    function endQuiz() {
-        setTimeout(function() {
-            if(chosenAns === randQuest[i].correct) {
-                correct++;
-            } else {
-                incorrect++;
-            }
-            score = correct / (correct +incorrect);
-            var correctAnswers = $("<p>").text("Correct Answers: " + correct);
-            var incorrectAnswers = $("<p>").text("Incorrect Answers: " + incorrect);
-            $("#questionText").text("You scored " + score + "%")
-            $("#answerText").empty();
-            $("#answerText").append(correctAnswers, incorrectAnswers);
-            stopTimer();
-            $("#timer").empty();
-        }, 1000);
-    };
-
-    $(this).on("click", ".userChoice", function(event) {
-        chosenAns = event.currentTarget.innerText;
-        if(i < randQuest.length - 1) {
-            if(chosenAns === randQuest[i].correct) {
-                correct++;
-            } else {
-                incorrect++;
-            }
-            i++;
-            setTimeout(newQuestion, 1000);
-        } else {
-            endQuiz();
-        }
-    });
-
-    function timerCount () {
-        if(time > 0) {
-        time--;
-        var convertedTime = timeConvert(time);
-        $("#timer").text(convertedTime);
-        } else if (time === 0 && i < randQuest.length -1) {
-            stopTimer();
-            incorrect++;
-            i++;
-            newQuestion();
-        } else {
-            endQuiz();
-        }
-    };
 
     function startTimer() {
         if(timeRunning === false) {
@@ -120,15 +71,53 @@ $(document).ready(function() {
         }
     };
 
-    function timeConvert (t) {
-        minutes = Math.floor(t / 60);
-        seconds = t - (minutes * 60);
-        if (seconds < 10) {
-            seconds = "0" + seconds;
+    function timerCount () {
+        $("#timer").text("0:0" + time);
+        if(time > 0) {
+        time--;
+        } else if (time === 0 && i < randQuest.length -1) {
+            stopTimer();
+            incorrect++;
+            console.log('first time', incorrect);
+            i++;
+            newQuestion();
+        } else {
+            console.log('second time', incorrect);
+            endQuiz();
         }
-        if (minutes === 0) {
-            minutes = "0";
+    };
+
+    $(this).on("click", ".userChoice", function(event) {
+        chosenAns = event.currentTarget.innerText;
+        if(i < randQuest.length - 1) {
+            checkAnswer();
+            i++;
+            setTimeout(newQuestion, 1000);
+        } else {
+            endQuiz();
         }
-        return minutes + ":" + seconds;
+    });
+
+    function checkAnswer() {
+        if(chosenAns === randQuest[i].correct) {
+            correct++;
+        } else {
+            incorrect++;
+            console.log('checkAnswer', incorrect);
+        }
+    };
+
+    function endQuiz() {
+        setTimeout(function() {
+            
+            score = (correct / (correct +incorrect) * 100);
+            var correctAnswers = $("<p>").text("Correct Answers: " + correct);
+            var incorrectAnswers = $("<p>").text("Incorrect Answers: " + incorrect);
+            $("#questionText").text("You scored " + score + "%")
+            $("#answerText").empty();
+            $("#answerText").append(correctAnswers, incorrectAnswers);
+            stopTimer();
+            $("#timer").empty();
+        }, 1000);
     }; 
 });
