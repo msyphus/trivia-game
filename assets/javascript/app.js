@@ -5,7 +5,7 @@ var questions = [
         correct: "Failure to create the right work culture",
         explain: "It is common to blame circumstances or people when failure occurs, but failure to create an appropriate work culture is a root \
                  problem that creates unfavorable circumstances.",
-        source: "Reference:  \"How You Are Killing Your Lean Program and Don\'t Know it.\" Mark Syphus, 2019."
+        source: "For more information:  \"How You Are Killing Your Lean Program and Don\'t Know it.\" Mark Syphus, 2019."
     },
     {
         quest: "What is the most critical customer feedback to investigate?",
@@ -13,14 +13,14 @@ var questions = [
         correct: "Saying everything is \"Just fine\"",
         explain: "If a customer tells you this, they either don\'t trust that telling you will do any good or they have already decided to go \
                  elsewhere so they don't care to give you feedback.",
-        source: "Reference: \"Raving Fans.\" Ken Blanchard and Sheldon Bowles, 1993."
+        source: "For more information: \"Raving Fans.\" Ken Blanchard and Sheldon Bowles, 1993."
     },
     {
         quest: "To have a successful business, you should set a goal to have satisfied customers.",
         answers: ["True", "False"],
         correct: "False",
         explain: "Having satisfied customers is a low target that won't create customer loyalty.  For long-term success, you need to create fans!",
-        source: "Reference: \"Raving Fans.\" Ken Blanchard and Sheldon Bowles, 1993."
+        source: "For more information: \"Raving Fans.\" Ken Blanchard and Sheldon Bowles, 1993."
     },
     {
         quest: "What is the first thing you should do to inspire people to excel in their work?",
@@ -28,7 +28,30 @@ var questions = [
         correct: "Show the importance of what they do",
         explain: "If people don't understand the importance of what they do, they will not be motivated enough to excel in difficult conditions.  The other \
                  options are also important, but they have to be built on a foundation of understanding why the work being done is important.",
-        source: "Reference: \"Gung Ho.\" Ken Blanchard and Sheldon Bowles, 1998."
+        source: "For more information: \"Gung Ho.\" Ken Blanchard and Sheldon Bowles, 1998."
+    },
+    {
+        quest: "You create a KPI for customer satisfaction based off of customer reviews, complaints, and surveys that you review each month.  Is this a good strategy?",
+        answers: ["Yes", "No", "Depends on the business, market, or culture"],
+        correct: "No",
+        explain: "Although this is a well-rounded approach for customer feedback, it does not consider leading indicators and the review interval is too long. \
+                 By the time you know there's a problem, it's already too late!",
+        source:  "For more information: \"When Leaders Torture Their Employees.\" Daniel Markovitz, 2020."
+    },
+    {
+        quest: "It is best to avoid having fun in the workplace so you can maintain a professional atmosphere.",
+        answers: ["True", "False"],
+        correct: "False",
+        explain: "Creating a fun environment is a great way to boost results as long as it is controlled.",
+        source: "For more information: \"FISH! A Proven Way to Boost Morale and Improve Results\" Stephen C. Lundin, Harry Paul, and John Christensen, 2000."
+    },
+    {
+        quest: "A successful manager:",
+        answers: ["Achieves results", "Builds good relationships with subordinates", "Strikes a balance between results and relationships"],
+        correct: "Strikes a balance between results and relationships",
+        explain: "There are two kinds of bad managers:  1) One who gets results but is hated by subordinates  2) One who is loved by subordinates but can't achieve good business results. \
+                 The challenge to being a good manager is to find the balance between the two.",
+        source: "For more information: \"The New One Minute Manager.\" Ken Blanchard and Spencer Johnson, 2015."
     }
 ];
 
@@ -134,7 +157,7 @@ $(document).ready(function() {
 
     function endQuiz() {
         setTimeout(function() {
-            score = (correct / (correct +incorrect) * 100);
+            score = Math.round((correct / (correct + incorrect)) * 100);
             var correctAnswers = $("<p>").html("Correct Answers: " + correct);
             var incorrectAnswers = $("<p>").text("Incorrect Answers: " + incorrect);
             $("#questionText").text("You scored " + score + "%")
