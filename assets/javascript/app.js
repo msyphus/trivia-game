@@ -11,8 +11,8 @@ var questions = [
         quest: "What is the most critical customer feedback to investigate?",
         answers: ["Complaints", "Compliments", "Saying everything is \"Just fine\"", "Silence"],
         correct: "Saying everything is \"Just fine\"",
-        explain: "If a customer tells you this, they either don\'t trust that telling you will do any good or they have already decided to go \
-                 elsewhere so they don't care to give you feedback.",
+        explain: "If customers tell you this, they either don\'t trust that you'll do anything about their feedback or they don't care to give it to you. \
+                 Is it because they have already decided to go elsewhere? Is it because they are not loyal? You'll never know if you don't investigate!",
         source: "For more information: \"Raving Fans.\" Ken Blanchard and Sheldon Bowles, 1993."
     },
     {
@@ -49,7 +49,7 @@ var questions = [
         quest: "A successful manager:",
         answers: ["Achieves results", "Builds good relationships with subordinates", "Strikes a balance between results and relationships"],
         correct: "Strikes a balance between results and relationships",
-        explain: "There are two kinds of bad managers:  1) One who gets results but is hated by subordinates  2) One who is loved by subordinates but can't achieve good business results. \
+        explain: "There are two kinds of bad managers: One who gets results but is hated by subordinates and one who is loved by subordinates but can't achieve good business results. \
                  The challenge to being a good manager is to find the balance between the two.",
         source: "For more information: \"The New One Minute Manager.\" Ken Blanchard and Spencer Johnson, 2015."
     }
@@ -59,7 +59,7 @@ var randQuest;
 var chosenAns;
 var correct = 0;
 var incorrect = 0;
-var time = 5;
+var time = 12;
 var timeInterval;
 var timeRunning = false;
 var i = 0;
@@ -105,12 +105,13 @@ $(document).ready(function() {
             $(".btn").on("click", false);
             clearInterval(timeInterval);
             timeRunning = false;
-            time = 5;
+            time = 12;
         }
     };
 
     function timerCount () {
-        $("#timer").text("0:0" + time);
+        var convertedTime = timeConvert(time);
+        $("#timer").text(convertedTime);
         if (time > 0) {
             time--;
         } else if (i < randQuest.length -1) {
@@ -126,6 +127,13 @@ $(document).ready(function() {
             setTimeout(endQuiz, 2000);
         }
     };
+
+    function timeConvert () {
+        if (time < 10) {
+            time = "0" + time;
+        }
+        return "0:"+ time;
+    }
 
     $(this).on("click", ".userChoice", function(event) {
         chosenAns = event.currentTarget.innerText;
