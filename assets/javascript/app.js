@@ -109,10 +109,8 @@ $(document).ready(function() {
         if(i < randQuest.length - 1) {
             checkAnswer();
             i++;
-            setTimeout(newQuestion, 10000);
         } else {
             checkAnswer();
-            setTimeout(endQuiz, 10000);
         }
     });
 
@@ -122,9 +120,15 @@ $(document).ready(function() {
             correct++;
             $("#explanation").text(randQuest[i].explain);
             $("#reference").text(randQuest[i].source);
+            setTimeout(newQuestion, 10000);
         } else {
             incorrect++;
             $("#explanation").text("Sorry!  That's not the best answer.");
+            if( i < randQuest.length -1) {
+                setTimeout(newQuestion, 2000);
+            } else {
+                setTimeout(endQuiz, 2000);
+            }
         }
     };
 
@@ -139,6 +143,21 @@ $(document).ready(function() {
             $("#explanation").empty();
             $("#reference").empty();
             $("#timer").empty();
+            $("#explanation").html("<button class='btn btn-info'>" + "Retake Quiz" + "</button>");
+            $("button").on("click", restart);
         }, 3000);
     }; 
+
+    function restart () {
+        $("#questionText").empty();
+        $("#answerText").empty();
+        $("#explanation").empty();
+        i = 0;
+        correct = 0;
+        incorrect = 0;
+        randQuest = questions.sort(function (a, b) {
+            return 0.5 - Math.random();
+        })      
+        newQuestion();
+    };
 });
