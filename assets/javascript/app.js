@@ -111,7 +111,7 @@ $(document).ready(function() {
         stopTimer();
         setTimeout(function() {
             score = (correct / (correct +incorrect) * 100);
-            var correctAnswers = $("<p>").text("Correct Answers: " + correct);
+            var correctAnswers = $("<p>").html("Correct Answers: " + correct);
             var incorrectAnswers = $("<p>").text("Incorrect Answers: " + incorrect);
             $("#questionText").text("You scored " + score + "%")
             $("#answerText").empty();
