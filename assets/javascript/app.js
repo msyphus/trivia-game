@@ -73,16 +73,15 @@ $(document).ready(function() {
 
     function timerCount () {
         $("#timer").text("0:0" + time);
-        if(time > 0) {
-        time--;
-        } else if (time === 0 && i < randQuest.length -1) {
+        if (time > 0) {
+            time--;
+        } else if (i < randQuest.length -1) {
             stopTimer();
             incorrect++;
-            console.log('first time', incorrect);
             i++;
             newQuestion();
         } else {
-            console.log('second time', incorrect);
+            incorrect++;
             endQuiz();
         }
     };
@@ -103,20 +102,18 @@ $(document).ready(function() {
             correct++;
         } else {
             incorrect++;
-            console.log('checkAnswer', incorrect);
         }
     };
 
     function endQuiz() {
+        stopTimer();
         setTimeout(function() {
-            
             score = (correct / (correct +incorrect) * 100);
             var correctAnswers = $("<p>").text("Correct Answers: " + correct);
             var incorrectAnswers = $("<p>").text("Incorrect Answers: " + incorrect);
             $("#questionText").text("You scored " + score + "%")
             $("#answerText").empty();
             $("#answerText").append(correctAnswers, incorrectAnswers);
-            stopTimer();
             $("#timer").empty();
         }, 1000);
     }; 
