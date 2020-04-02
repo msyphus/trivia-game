@@ -106,7 +106,7 @@ $(document).ready(function() {
             $(".btn").on("click", false);
             clearInterval(timeInterval);
             timeRunning = false;
-            time = 12;
+            time = 30;
         }
     };
 
