@@ -64,6 +64,7 @@ var timeInterval;
 var timeRunning = false;
 var i = 0;
 var score;
+var convertedTime;
 
 $(document).ready(function() {
     $("button").on("click", function() {
@@ -76,6 +77,9 @@ $(document).ready(function() {
     });
 
     function newQuestion() {
+        time = 30;
+        convertedTime = timeConvert(time);
+        $("#timer").text(convertedTime);
         $("#questionText").text(randQuest[i].quest);
         answerList();
         startTimer();
@@ -97,6 +101,7 @@ $(document).ready(function() {
         if(timeRunning === false) {
             timeRunning = true;
             $(".btn").off("click", false);
+            time--; //prevents 1 second delay of the first timerCount interval
             timeInterval = setInterval(timerCount, 1000);
         }
     };
@@ -106,12 +111,11 @@ $(document).ready(function() {
             $(".btn").on("click", false);
             clearInterval(timeInterval);
             timeRunning = false;
-            time = 30;
         }
     };
 
     function timerCount () {
-        var convertedTime = timeConvert(time);
+        convertedTime = timeConvert(time);
         $("#timer").text(convertedTime);
         if (time > 0) {
             time--;
