@@ -66,14 +66,17 @@ var i = 0;
 var score;
 var convertedTime;
 
-$(document).ready(function() {
-    $("button").on("click", function() {
+$(document).ready(function() {    
+    $("#nextBtn, #continueBtn").hide();
+    $(".clock").hide();
+
+    $("#startBtn").on("click", function() {
         randQuest = questions.sort(function (a, b) {
             return 0.5 - Math.random();
-        });  
-        console.log(randQuest);    
+        });      
         newQuestion();
-        $(".startButton").hide();
+        $("#startBtn").hide();
+        $(".clock").show();
     });
 
     function newQuestion() {
@@ -124,12 +127,12 @@ $(document).ready(function() {
             incorrect++;
             i++;
             $("#explanation").text("Time's Up");
-            setTimeout(newQuestion, 2000);
+            $("#nextBtn").show();
         } else {
             stopTimer();
             incorrect++;
             $("#explanation").text("Time's Up");
-            setTimeout(endQuiz, 2000);
+            $("#continueBtn").show();
         }
     };
 
@@ -157,36 +160,44 @@ $(document).ready(function() {
             $("#explanation").text(randQuest[i].explain);
             $("#reference").text(randQuest[i].source);
             if( i < randQuest.length -1) {
-                setTimeout(newQuestion, 10000);
+                $("#nextBtn").show();
             } else {
-                setTimeout(endQuiz, 10000);
+                $("#continueBtn").show();
             }
         } else {
             incorrect++;
             $("#explanation").text("Sorry!  That's not the best answer.");
             if( i < randQuest.length -1) {
-                setTimeout(newQuestion, 2000);
+                $("#nextBtn").show();
             } else {
-                setTimeout(endQuiz, 2000);
+                $("#continueBtn").show();
             }
         }
     };
 
     function endQuiz() {
-        setTimeout(function() {
-            score = Math.round((correct / (correct + incorrect)) * 100);
-            var correctAnswers = $("<p>").html("Correct Answers: " + correct);
-            var incorrectAnswers = $("<p>").text("Incorrect Answers: " + incorrect);
-            $("#questionText").text("You scored " + score + "%")
-            $("#answerText").empty();
-            $("#answerText").append(correctAnswers, incorrectAnswers);
-            $("#explanation").empty();
-            $("#reference").empty();
-            $("#timer").empty();
-            $("#explanation").html("<button class='btn btn-info'>" + "Retake Quiz" + "</button>");
-            $("button").on("click", restart);
-        }, 3000);
+        score = Math.round((correct / (correct + incorrect)) * 100);
+        var correctAnswers = $("<p>").html("Correct Answers: " + correct);
+        var incorrectAnswers = $("<p>").text("Incorrect Answers: " + incorrect);
+        $("#questionText").text("You scored " + score + "%")
+        $("#answerText").empty();
+        $("#answerText").append(correctAnswers, incorrectAnswers);
+        $("#explanation").empty();
+        $("#reference").empty();
+        $("#timer").empty();
+        $("#explanation").html("<button class='btn btn-info retake'>" + "Retake Quiz" + "</button>");
+        $(".retake").on("click", restart);
     }; 
+
+    $("#nextBtn").on("click", function() {
+        newQuestion();
+        $("#nextBtn").hide();
+    });
+
+    $("#continueBtn").on("click", function() {
+        endQuiz();
+        $("#continueBtn").hide();
+    });
 
     function restart () {
         $("#questionText").empty();
