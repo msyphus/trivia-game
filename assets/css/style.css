@@ -3,5 +3,20 @@
 }
 
 .bg-secondary {
-    background-color: rgba(128,128,128,0.7)!important;
+    background-color: rgba(128, 128, 128, 0.7)!important;
+}
+
+.clock {
+    font-weight: bold;
+    background-color: rgb(204, 204, 204, 0.3);
+    border-radius: 0 5px 0 0;
+    border: 1px inset #cccccc;
+}
+
+.btn-info {
+    border: 1px outset #17a2b8;
+}
+
+p {
+    font-weight: bold;
 }
