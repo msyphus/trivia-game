@@ -141,7 +141,7 @@ $(document).ready(function() {
             time = "0" + time;
         }
         return "0:"+ time;
-    }
+    };
 
     $(this).on("click", ".userChoice", function(event) {
         chosenAns = event.currentTarget.innerText;
